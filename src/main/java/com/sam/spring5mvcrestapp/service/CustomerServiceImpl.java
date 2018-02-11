@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sam.spring5mvcrestapp.api.v1.mapper.CustomerMapper;
 import com.sam.spring5mvcrestapp.api.v1.model.CustomerDTO;
+import com.sam.spring5mvcrestapp.domain.Customer;
 import com.sam.spring5mvcrestapp.repository.CustomerRepository;
 
 
@@ -41,4 +42,18 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customerMapper::customerToCustomerDTO)
                 .orElseThrow(RuntimeException::new); //todo implement better exception handling
     }
+
+	@Override
+	public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+		
+		Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+		
+		Customer savedCustomer = customerRepository.save(customer);
+		
+		CustomerDTO returnDTO= customerMapper.customerToCustomerDTO(savedCustomer);
+		
+		returnDTO.setCustomerUrl("/api/v1/customer/"+ savedCustomer.getId());
+		
+		return returnDTO;
+	}
 }
