@@ -71,4 +71,21 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return saveAndReturnDTO(customer);
 	}
+	
+	 @Override
+    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {//if we want to chance only a few property web can u like this concepts
+        return customerRepository.findById(id).map(customer -> {
+
+            if(customerDTO.getFirstname() != null){
+                customer.setFirstname(customerDTO.getFirstname());
+            }
+
+            if(customerDTO.getLastname() != null){
+                customer.setLastname(customerDTO.getLastname());
+            }
+
+            return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+        }).orElseThrow(RuntimeException::new); //todo implement better exception handling;
+    }
+	
 }
