@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sam.spring5mvcrestapp.api.v1.model.CategoryDTO;
 import com.sam.spring5mvcrestapp.api.v1.model.CategoryListDTO;
 import com.sam.spring5mvcrestapp.service.CategoryService;
-
 @Controller
-@RequestMapping("api/v1/categories/")
+@RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 	
 	private final CategoryService categoryService;
+	
+	 public static final String BASE_URL = "/api/v1/categories";
 
 	public CategoryController(CategoryService categoryService) {
 		this.categoryService = categoryService;
