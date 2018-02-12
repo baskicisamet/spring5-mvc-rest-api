@@ -21,6 +21,7 @@ import com.sam.spring5mvcrestapp.bootstrap.Bootstrap;
 import com.sam.spring5mvcrestapp.domain.Customer;
 import com.sam.spring5mvcrestapp.repository.CategoryRepository;
 import com.sam.spring5mvcrestapp.repository.CustomerRepository;
+import com.sam.spring5mvcrestapp.repository.VendorRepository;
 
 
 @RunWith(SpringRunner.class)
@@ -32,6 +33,9 @@ public class CustomerServiceImplIT {
 
     @Autowired
     CategoryRepository categoryRepository;
+    
+    @Autowired
+    VendorRepository vendorRepository;
 
     CustomerService customerService;
 
@@ -41,7 +45,7 @@ public class CustomerServiceImplIT {
         System.out.println(customerRepository.findAll().size());
 
         //setup data for testing
-        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+        Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
         bootstrap.run(); //load data
 
         customerService = new CustomerServiceImpl(CustomerMapper.INSTANCE, customerRepository);

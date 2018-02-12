@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 
 import com.sam.spring5mvcrestapp.domain.Category;
 import com.sam.spring5mvcrestapp.domain.Customer;
+import com.sam.spring5mvcrestapp.domain.Vendor;
 import com.sam.spring5mvcrestapp.repository.CategoryRepository;
 import com.sam.spring5mvcrestapp.repository.CustomerRepository;
+import com.sam.spring5mvcrestapp.repository.VendorRepository;
 
 
 @Component
@@ -15,19 +17,25 @@ public class Bootstrap implements CommandLineRunner{
     
     private final CategoryRepository categoryRespository;
     private final CustomerRepository customerRepository;
-
-    public Bootstrap(CategoryRepository categoryRespository, CustomerRepository customerRepository) {
-        this.categoryRespository = categoryRespository;
-        this.customerRepository = customerRepository;
-    }
-
+    private final VendorRepository vendorRepository;
    
 
-    @Override
+    public Bootstrap(CategoryRepository categoryRespository, CustomerRepository customerRepository,
+			VendorRepository vendorRepository) {
+    	
+		this.categoryRespository = categoryRespository;
+		this.customerRepository = customerRepository;
+		this.vendorRepository = vendorRepository;
+	}
+
+
+
+	@Override
     public void run(String... args) throws Exception {
        
     	loadCategories();
     	loadCustomers();
+    	loadVendors();
 
     }
     
@@ -74,5 +82,16 @@ public class Bootstrap implements CommandLineRunner{
         customerRepository.save(customer2);
 
         System.out.println("Customers Loaded: " + customerRepository.count());
+    }
+    
+    private void loadVendors() {
+        Vendor vendor1 = new Vendor();
+        vendor1.setName("Vendor 1");
+        vendorRepository.save(vendor1);
+
+        Vendor vendor2 = new Vendor();
+        vendor2.setName("Vendor 2");
+        vendorRepository.save(vendor2);
+
     }
 }
